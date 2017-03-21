@@ -5,7 +5,7 @@ download repository
 npm install && npm start
 ```
 
-To build app for distribution for various systems -
+To build app for distribution - (builds both 32 and 64 bit versions for all platforms - linux, windows, mac os (kernel darwin and mas))
 
 `electron packager . --all  `
 
