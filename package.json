@@ -1,0 +1,35 @@
+{
+  "name": "Epiviz",
+  "version": "0.0.1",
+  "description": "Genomics Data Visualization Platform",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "epiviz",
+    "mac": {
+      "category": "genomics.epiviz"
+    }
+  },
+  "repository": "https://github.com/jkanche/epiviz-electron",
+  "keywords": [
+    "epiviz",
+    "genomics",
+    "data",
+    "visualization"
+  ],
+  "postinstall": "install-app-deps",
+  "author": "Jayaram Kancherla (jkanche @ umd . edu)",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-builder": "^15.6.2",
+    "electron-packager": "^8.6.0"
+  },
+  "dependencies": {
+    "yargs": "^7.0.2"
+  }
+}
