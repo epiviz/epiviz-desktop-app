@@ -7,6 +7,13 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+const args = require('./args')
+const opts = args.parse(process.argv.slice(1))
+
+global.ARGS = opts
+
+// console.log(global.ARGS)
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -15,15 +22,26 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src/index-standalone.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  if(opts.port) {
+    // and load the epivizr-standalone.html of the app.
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'src/epivizr-standalone.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+
+  }
+  else {
+    // and load the index.html of the app.
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'src/index-standalone.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+  }
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

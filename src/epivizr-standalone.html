@@ -74,9 +74,9 @@
     <script src="src/lib/es6-promise/Promise.js"></script>
 
     <!-- canvg -->
-    <script src="src/lib/canvg/rgbcolor.js"></script>
+    <!--<script src="src/lib/canvg/rgbcolor.js"></script>
     <script src="src/lib/canvg/StackBlur.js"></script>
-    <script src="src/lib/canvg/canvg.js"></script>
+    <script src="src/lib/canvg/canvg.js"></script>-->
 
     <!-- html2canvas -->
     <script src="src/lib/html2canvas/html2canvas.js"></script>
@@ -103,6 +103,13 @@
     <script src="src/epiviz/utils/iterable.js"></script>
     <script src="src/epiviz/utils/iterable-array.js"></script>
     <script src="src/epiviz/config.js"></script>
+
+    <script>
+        var remote = require('electron').remote;     
+
+        console.log(remote.getGlobal('ARGS'));
+        epiviz.Config.SETTINGS.websocketport = remote.getGlobal('ARGS').port;
+    </script>
 
     <script src="src/epiviz/events/event-listener.js"></script>
     <script src="src/epiviz/events/event.js"></script>
@@ -268,16 +275,22 @@
 
     <script src="src/epiviz/main.js"></script>
     <script src="src/epiviz/standalone-settings.js"></script>
+
+
     <script src="src/epiviz/epivizr-settings.js"></script>
 
     <script>
         $(function() {
-            epiviz.ui.WebArgsManager.WEB_ARGS = epiviz.ui.WebArgsManager.extractWindowLocationArgs();
-            epiviz.workspaces.UserManager.USER_STATUS = {
-                loggedIn: false,
-                oauthProvider: null,
-                userData: null
-            };
+
+            var d3 = require("./src/lib/d3/d3.v3.js");
+
+            window.d3 = d3;
+            // epiviz.ui.WebArgsManager.WEB_ARGS = epiviz.ui.WebArgsManager.extractWindowLocationArgs();
+            // epiviz.workspaces.UserManager.USER_STATUS = {
+            //     loggedIn: false,
+            //     oauthProvider: null,
+            //     userData: null
+            // };
 
             epiviz.main();
         });

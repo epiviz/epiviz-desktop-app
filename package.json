@@ -14,7 +14,7 @@
       "category": "genomics.epiviz"
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/jkanche/epiviz-electron",
   "keywords": [
     "epiviz",
     "genomics",
@@ -28,5 +28,8 @@
     "electron": "^1.4.1",
     "electron-builder": "^15.6.2",
     "electron-packager": "^8.6.0"
+  },
+  "dependencies": {
+    "yargs": "^7.0.2"
   }
 }
