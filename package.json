@@ -22,12 +22,14 @@
     "visualization"
   ],
   "postinstall": "install-app-deps",
-  "author": "Jayaram Kancherla (jkanche @ umd . edu)",
+  "author": "Jayaram Kancherla <jkanche@umiacs.umd.edu>",
   "license": "CC0-1.0",
   "devDependencies": {
+    "ajv-keywords": "^1.5.1",
     "electron": "^1.4.1",
-    "electron-builder": "^15.6.2",
-    "electron-packager": "^8.6.0"
+    "electron-builder": "^15.6.4",
+    "electron-packager": "^8.6.0",
+    "hdiutil": "0.0.6"
   },
   "dependencies": {
     "yargs": "^7.0.2"
