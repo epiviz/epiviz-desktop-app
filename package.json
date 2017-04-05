@@ -9,9 +9,9 @@
     "dist": "build"
   },
   "build": {
-    "appId": "epiviz",
+    "appId": "org.epiviz.epiviz",
     "mac": {
-      "category": "genomics.epiviz"
+      "category": "public.app-category.developer-tools"
     }
   },
   "repository": "https://github.com/jkanche/epiviz-electron",

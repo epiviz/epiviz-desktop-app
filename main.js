@@ -7,6 +7,8 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+const fs = require('fs')
+
 const args = require('./args')
 const opts = args.parse(process.argv.slice(1))
 
@@ -17,6 +19,20 @@ global.ARGS = opts
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+const appPath = app.getAppPath()
+const appBase = path.basename(appPath)
+// if (appBase !== 'app.asar') {
+//   // We can only create the symbolic link to the packaged app
+//   return
+// }
+const appDir = path.dirname(appPath)
+const targetPath = path.join(appDir, 'epiviz.sh')
+const linkPath = '/usr/local/bin/epiviz'
+if (!fs.existsSync(linkPath)) {
+  fs.symlinkSync(targetPath, linkPath)
+  // log.warn('created symlink ' + linkPath + ' -> ' + targetPath)
+}
 
 function createWindow () {
   // Create the browser window.
