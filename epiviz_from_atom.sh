@@ -1,10 +1,7 @@
 #!/bin/bash
 #
-# Bash script for launching epiviz from command line,
-# based on atom.sh from Epiviz text editor:
-#  https://github.com/atom/atom
+#  sourced from atom - github.com/atom/atom
 #
-# Script based on https://github.com/antonycourtney/tad
 #
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -35,7 +32,7 @@ while getopts ":wtfvh-:" opt; do
           REDIRECT_STDERR=1
           EXPECT_OUTPUT=1
           ;;
-        foreground|test)
+        foreground|benchmark|benchmark-test|test)
           EXPECT_OUTPUT=1
           ;;
       esac
@@ -62,39 +59,48 @@ if [ $EXPECT_OUTPUT ]; then
 fi
 
 if [ $OS == 'Mac' ]; then
+  if [ -L "$0" ]; then
+    SCRIPT="$(readlink "$0")"
+  else
+    SCRIPT="$0"
+  fi
+  EPIVIZ_APP="Epiviz.app"
+  if [ "$EPIVIZ_APP" == . ]; then
+    unset EPIVIZ_APP
+  else
+    EPIVIZ_PATH="$(dirname "$EPIVIZ_APP")"
+    EPIVIZ_APP_NAME="$(basename "$EPIVIZ_APP")"
+  fi
+
   if [ -n "$BETA_VERSION" ]; then
-    EPIVIZ_APP_NAME="Epiviz Beta.app"
     EPIVIZ_EXECUTABLE_NAME="Epiviz Beta"
   else
-    EPIVIZ_APP_NAME="Epiviz.app"
     EPIVIZ_EXECUTABLE_NAME="Epiviz"
   fi
 
   if [ -z "${EPIVIZ_PATH}" ]; then
-    # If EPIVIZ_PATH isnt set, check /Applications and then ~/Applications for EPIVIZ.app
+    # If EPIVIZ_PATH isn't set, check /Applications and then ~/Applications for EPIVIZ.app
     if [ -x "/Applications/$EPIVIZ_APP_NAME" ]; then
       EPIVIZ_PATH="/Applications"
     elif [ -x "$HOME/Applications/$EPIVIZ_APP_NAME" ]; then
       EPIVIZ_PATH="$HOME/Applications"
     else
-      # We havent found an Epiviz.app, use spotlight to search for Epiviz
-      # EPIVIZ_PATH="$(mdfind "kMDItemCFBundleIdentifier == 'org.epiviz.epiviz'" | grep -v ShipIt | head -1 | xargs -0 dirname)"
+      # We haven't found an EPIVIZ.app, use spotlight to search for EPIVIZ
+      EPIVIZ_PATH="$(mdfind "kMDItemCFBundleIdentifier == 'org.epiviz.epiviz'" | grep -v ShipIt | head -1 | xargs -0 dirname)"
 
-      # Exit if Epiviz can't be found
+      # Exit if EPIVIZ can't be found
       if [ ! -x "$EPIVIZ_PATH/$EPIVIZ_APP_NAME" ]; then
-        echo "Cannot locate Epiviz.app, it is usually located in /Applications. Set the EPIVIZ_PATH environment variable to the directory containing Epiviz.app."
+        echo "Cannot locate ${EPIVIZ_APP_NAME}, it is usually located in /Applications. Set the EPIVIZ_PATH environment variable to the directory containing ${EPIVIZ_APP_NAME}."
         exit 1
       fi
     fi
   fi
 
   if [ $EXPECT_OUTPUT ]; then
-    "$EPIVIZ_PATH/$EPIVIZ_APP_NAME/Contents/MacOS/$EPIVIZ_EXECUTABLE_NAME" "$@"
+    "$EPIVIZ_PATH/$EPIVIZ_APP_NAME/Contents/MacOS/$EPIVIZ_EXECUTABLE_NAME" --executed-from="$(pwd)" --pid=$$ "$@"
     exit $?
   else
-    # open -a "$EPIVIZ_PATH/$EPIVIZ_APP_NAME" -n --args --executed-from="$(pwd)" --pid=$$ --path-environment="$PATH" "$@"
-    # echo "Starting $EPIVIZ_PATH/$EPIVIZ_APP_NAME" -n --args --executed-from="$(pwd)" "$@"
-    open -a "$EPIVIZ_PATH/$EPIVIZ_APP_NAME/Contents/MacOS/$EPIVIZ_EXECUTABLE_NAME" -n --args "$@"
+    open -a "$EPIVIZ_PATH/$EPIVIZ_APP_NAME" -n --args --executed-from="$(pwd)" --pid=$$ --path-environment="$PATH" "$@"
   fi
 elif [ $OS == 'Linux' ]; then
   SCRIPT=$(readlink -f "$0")
@@ -127,13 +133,13 @@ elif [ $OS == 'Linux' ]; then
   fi
 fi
 
-# Exits this process when Epiviz is used as $EDITOR
+# Exits this process when EPIVIZ is used as $EDITOR
 on_die() {
   exit 0
 }
 trap 'on_die' SIGQUIT SIGTERM
 
-# If the wait flag is set, don't exit this process until Epiviz tells it to.
+# If the wait flag is set, don't exit this process until EPIVIZ tells it to.
 if [ $WAIT ]; then
   while true; do
     sleep 1
