@@ -12,7 +12,10 @@
     "appId": "org.epiviz.epiviz",
     "mac": {
       "category": "public.app-category.developer-tools"
-    }
+    },
+    "extraResources": [
+      "epiviz.sh"
+    ]
   },
   "repository": "https://github.com/jkanche/epiviz-electron",
   "keywords": [

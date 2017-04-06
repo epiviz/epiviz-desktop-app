@@ -26,12 +26,14 @@ const appBase = path.basename(appPath)
 //   // We can only create the symbolic link to the packaged app
 //   return
 // }
-const appDir = path.dirname(appPath)
-const targetPath = path.join(appDir, 'epiviz.sh')
-const linkPath = '/usr/local/bin/epiviz'
-if (!fs.existsSync(linkPath)) {
-  fs.symlinkSync(targetPath, linkPath)
-  // log.warn('created symlink ' + linkPath + ' -> ' + targetPath)
+
+if (process.platform == 'darwin') {
+  const appDir = path.dirname(appPath)
+  const targetPath = path.join(appDir, 'epiviz.sh')
+  const linkPath = '/usr/local/bin/epiviz'
+  if (!fs.existsSync(linkPath)) {
+    fs.symlinkSync(targetPath, linkPath)
+  }
 }
 
 function createWindow () {
