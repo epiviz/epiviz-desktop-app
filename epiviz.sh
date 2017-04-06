@@ -22,7 +22,7 @@ else
   BETA_VERSION=
 fi
 
-export EPIVIZ_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT=true
+# export EPIVIZ_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT=true
 
 while getopts ":wtfvh-:" opt; do
   case "$opt" in
