@@ -1,3 +1,12 @@
+To istall, Please download the latest version of the app from 
+
+https://github.com/epiviz/epiviz-desktop-app/releases
+
+
+
+
+# For developers
+
 # electron epiviz app
 
 ```
