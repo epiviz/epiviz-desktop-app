@@ -1,53 +1,32 @@
-To istall, Please download the latest version of the app from 
+# Installation
+Please download the latest version of the app from 
 
 https://github.com/epiviz/epiviz-desktop-app/releases
 
 
+# To build app from source
 
-
-# For developers
-
-# electron epiviz app
+Install all app requirements. Epiviz app is built using electron (based on nodeJS). Please install nodejs before building.
 
 ```
 download repository
 npm install && npm start
 ```
 
-To build app for distribution - (builds both 32 and 64 bit versions for all platforms - linux, windows, mac os (kernel darwin and mas))
+To build app for distribution
 
-`electron-packager . --all  `
+## Windows
+`node_modules/.bin/build --windows`
 
-to build using electron-builder
+## MAC
+`node_modules/.bin/build --max dmg`
 
-has issues since electron-builder can't build apps for macos platform (have to build from a mac os system)
-`electron-builder .`
+## Linux
+`node_modules/.bin/build --linux deb rpm`
 
-## electron parameters
+## electron input parameters to launch from command line
     port = websocket port number
     workspace = load workspace (not implemented)
     gist = gist id (not implemented)
 
 `electron main.js --port=7123`
-
-To start loading data from local R session - 
-
-1. start epivizrStandalone.
-    TODO: update standalone open_browser to open app link. For now manually start server
-
-```
-library(epivizrStandalone)
-seqinfo <- GenomeInfoDb::Seqinfo(c("chr11","chr2"), c(1000000,8000000))
-app <- startStandalone(seqinfo=seqinfo, non_interactive=TRUE, host="localhost", verbose=TRUE)
-app$.open_browser()
-```
-
-2. start electron `electron main.js --port=7123`
-
-Then adding tracks - 
-
-```
-library(epivizr)
-data("tcga_colon_blocks")
-blocks_chart <- app$plot(tcga_colon_blocks, datasource_name="450k colon_blocks")
-```
