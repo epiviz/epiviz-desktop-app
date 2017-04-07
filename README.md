@@ -24,9 +24,19 @@ To build app for distribution
 ## Linux
 `node_modules/.bin/build --linux deb rpm`
 
-## electron input parameters to launch from command line
+## epiviz app input parameters to launch from command line
     port = websocket port number
     workspace = load workspace (not implemented)
     gist = gist id (not implemented)
 
-`electron main.js --port=7123`
+If installed as system app - 
+
+`epiviz --port=7123`
+
+If epiviz app was build locally - 
+
+on windows and linux
+`/path/to/epiviz/app --port=7123`
+
+on mac
+`open -a /path/to/epiviz/app -n --args --port-7123`
