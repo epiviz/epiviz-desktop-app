@@ -19,7 +19,7 @@ To build app for distribution
 `node_modules/.bin/build --windows`
 
 ## MAC
-`node_modules/.bin/build --max dmg`
+`node_modules/.bin/build --mac dmg`
 
 ## Linux
 `node_modules/.bin/build --linux deb rpm`
